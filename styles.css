@@ -4,3 +4,13 @@ body {
   height: 100% !important;
   margin: 0 !important;
 }
+.canvas {
+  position: relative;
+}
+#label {
+  font-size: 32px;
+  display: none;
+  position: absolute;
+  top: 150px;
+  left: 150px;
+}

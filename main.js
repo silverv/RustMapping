@@ -52,6 +52,18 @@ $(label).keyup(function (event) {
         advancedText.resolution = 2.4;
         current.graphics.addChild(advancedText)
         $(label).val("");
+        $(label).hide();
+        canvas.focus();
+    }
+});
+$(label).keyup(function (event) {
+    if (event.which == "27") {
+        // escape was released
+        labelGiven = true;
+        // this may or may not work
+        current.graphics.parent.removeChild(current.graphics);
+        $(label).val("");
+        $(label).hide();
         canvas.focus();
     }
 });
@@ -60,18 +72,16 @@ let labelGiven = true;
 let map;
 console.log("Hello there! How are you doing pixi.js? This is a WI.");
 // load the texture we need
-app.loader.add('bunny', 'Map20200123.png').load((loader, resources) => {
-    // This creates a texture from a 'bunny.png' image
-    map = new PIXI.Sprite(resources.bunny.texture);
+app.loader.add('map', 'Map20200123.png').load((loader, resources) => {
+    map = new PIXI.Sprite(resources.map.texture);
 
-    // Setup the position of the bunny
     map.x = app.renderer.width / 2;
     map.y = app.renderer.height / 2;
 
     // Rotate around the center
     map.anchor.x = 0.5;
     map.anchor.y = 0.5;
-    // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
+
     map.interactive = true;
     map
         // events for drag start
@@ -86,7 +96,6 @@ app.loader.add('bunny', 'Map20200123.png').load((loader, resources) => {
         .on('mousemove', onDragMove)
     //.on('touchmove', onDragMove);
 
-    // Add the bunny to the scene we are building
     app.stage.addChild(map);
 });
 var data;
@@ -149,6 +158,7 @@ function onDragEnd(event) {
         current.graphics = graphics;
         graphics.zIndex = 2;
         map.addChild(graphics);
+        $(label).show();
         label.focus();
     } else {
         dragging = false;
